@@ -58,6 +58,21 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+
+    flavorDimensions "app"
+
+    productFlavors{
+        dev {
+            dimension "app"
+            applicationId "com.example.flutter_flavor.dev"
+            resValue 'string', 'app_name', 'DEV Flutter Flavor'
+        }
+        live {
+            dimension "app"
+            applicationId "com.example.flutter_flavor"
+            resValue 'string', 'app_name', 'Flutter Flavor'
+        }
+    }
 }
 
 flutter {

@@ -1,8 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_flavor/flavor_setting.dart';
 
-void main() {
+void main()async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final settings = await _getFlavorSettings();
+  print('API URL ${settings.apiBaseUrl}');
   runApp(const MyApp());
 }
+
+_getFlavorSettings() async {
+   String flavor = await const MethodChannel("flavor").invokeMethod('getFlavor');
+   print('STARTED WITH FLAVOR $flavor');
+
+   if (flavor == 'dev') {
+     return FlavorSetting.dev();
+   } else if (flavor == 'live') {
+     return FlavorSetting.live();
+   } else {
+     throw Exception("Unknown flavor: $flavor");
+   }
+}
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
